@@ -2,7 +2,7 @@ import type { Module } from 'vuex/types/index.js'
 import { type ProjectModel } from './projectModel'
 import { genUniqueId } from '@/utils/genUniqueId'
 
-type ProjectStoreState = {
+export type ProjectStoreState = {
   projects: ProjectModel[]
 }
 

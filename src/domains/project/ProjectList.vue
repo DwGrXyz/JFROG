@@ -35,11 +35,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useStore } from 'vuex'
 import { getProjectDetailsRoute } from '@/router'
 import { mdiClose, mdiPlus } from '@mdi/js'
+import { useAppStore } from '@/store'
 
-const store = useStore()
+const store = useAppStore()
 const projectList = computed(() => store.getters['projects/getProjects'])
 const removeProject = (id: string) => store.commit('projects/removeProject', id)
 const createProject = () => store.dispatch('projects/createProject')
