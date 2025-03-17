@@ -3,13 +3,19 @@ import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <main>
+  <v-app>
     <header>
-      <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+      <img
+        alt="Vue logo"
+        class="logo"
+        src="@/assets/logo.svg"
+        width="125"
+        height="125"
+      />
     </header>
 
     <RouterView />
-  </main>
+  </v-app>
 </template>
 
 <style scoped>
