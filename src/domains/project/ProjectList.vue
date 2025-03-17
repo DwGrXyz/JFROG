@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>Project list</h1>
-
+  <AppLayout title="Project list">
     <v-list>
       <v-list-item
         v-for="project in projectList"
@@ -30,7 +28,7 @@
         </v-list-item-title>
       </v-list-item>
     </v-list>
-  </div>
+  </AppLayout>
 </template>
 
 <script setup lang="ts">
@@ -38,6 +36,7 @@ import { computed } from 'vue'
 import { getProjectDetailsRoute } from '@/router'
 import { mdiClose, mdiPlus } from '@mdi/js'
 import { useAppStore } from '@/store'
+import AppLayout from '../../components/AppLayout.vue'
 
 const store = useAppStore()
 const projectList = computed(() => store.getters['projects/getProjects'])

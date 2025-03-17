@@ -1,15 +1,13 @@
 <template>
-  <template v-if="project">
-    <h1>{{ project?.title }}</h1>
-  </template>
-  <NotFoundPage v-else />
+  <NotFoundPage v-if="!project" />
+  <AppLayout v-else :title="project.title" />
 </template>
 
 <script setup lang="ts">
 import { useAppStore } from '@/store'
 import { computed } from 'vue'
 import type { ProjectModel } from './store/projectModel'
-import NotFoundPage from '@/NotFoundPage.vue'
+import NotFoundPage from '@/components/NotFoundPage.vue'
 
 const props = defineProps<{
   projectId: string

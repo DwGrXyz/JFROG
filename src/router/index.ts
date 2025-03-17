@@ -1,4 +1,4 @@
-import NotFoundPage from '@/NotFoundPage.vue'
+import NotFoundPage from '@/components/NotFoundPage.vue'
 import {
   createRouter,
   createWebHistory,
