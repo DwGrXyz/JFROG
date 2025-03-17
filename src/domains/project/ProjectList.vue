@@ -34,22 +34,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { projectListDefault } from './ProjectModel'
-import { getProjectDetailsRoute, getProjectFormRoute } from '@/router'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { getProjectDetailsRoute } from '@/router'
 import { mdiClose, mdiPlus } from '@mdi/js'
-import { useRouter } from 'vue-router'
 
-const projectList = ref(projectListDefault)
-
-const removeProject = (id: string) => {
-  projectList.value = projectList.value.filter((project) => project.id !== id)
-}
-
-const router = useRouter()
-const createProject = () => {
-  const id = '3'
-  const route = getProjectFormRoute(id)
-  router.push(route)
-}
+const store = useStore()
+const projectList = computed(() => store.getters['projects/getProjects'])
+const removeProject = (id: string) => store.commit('projects/removeProject', id)
+const createProject = () => store.dispatch('projects/createProject')
 </script>
