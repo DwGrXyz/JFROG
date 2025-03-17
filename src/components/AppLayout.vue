@@ -1,8 +1,13 @@
 <template>
   <div>
-    <h1>{{ title }}</h1>
+    <h1 class="d-flex align-center ga-1">
+      {{ title }}
+      <slot name="action" />
+    </h1>
 
-    <slot />
+    <div class="mt-6">
+      <slot />
+    </div>
   </div>
 </template>
 

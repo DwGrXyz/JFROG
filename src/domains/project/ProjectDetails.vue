@@ -1,7 +1,9 @@
 <template>
   <NotFoundPage v-if="!project" />
   <AppLayout v-else :title="project.title">
-    <v-btn :to="formRoute" text="Edit" color="primary" />
+    <template v-slot:action>
+      <v-btn :to="formRoute" :icon="mdiPencil" variant="text" />
+    </template>
   </AppLayout>
 </template>
 
@@ -12,6 +14,7 @@ import type { ProjectModel } from './store/projectModel'
 import NotFoundPage from '@/components/NotFoundPage.vue'
 import { getProjectFormRoute } from '@/router'
 import AppLayout from '@/components/AppLayout.vue'
+import { mdiPencil } from '@mdi/js'
 
 const props = defineProps<{
   projectId: string

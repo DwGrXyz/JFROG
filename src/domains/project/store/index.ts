@@ -23,6 +23,11 @@ const projectStoreModule: Module<ProjectStoreState, any> = {
     addProject: (state, project: ProjectModel) => {
       state.projects = [...state.projects, project]
     },
+    updateProject: (state, project: ProjectModel) => {
+      state.projects = state.projects.map((projectI) =>
+        projectI.id === project.id ? project : projectI,
+      )
+    },
   },
   actions: {
     createUniqueId: ({ getters }) => {
