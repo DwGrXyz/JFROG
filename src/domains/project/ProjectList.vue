@@ -1,6 +1,7 @@
 <template>
   <AppLayout title="Project list">
-    <v-list>
+    <v-progress-circular v-if="projectListPending" indeterminate />
+    <v-list v-else>
       <v-list-item
         v-for="project in projectList"
         :key="project.id"
@@ -29,15 +30,22 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { getProjectDetailsRoute } from '@/router'
 import { mdiTrashCan } from '@mdi/js'
 import { useAppStore } from '@/store'
 import AppLayout from '@/components/AppLayout.vue'
 import AppCreateItem from '@/components/AppCreateItem.vue'
+import type { ProjectModel } from './store/projectModel'
+import { useAsyncRequest } from '@/compositions/useAsyncRequest'
+import { ref } from 'vue'
 
 const store = useAppStore()
-const projectList = computed(() => store.getters['projects/getProjects'])
+const projectList = ref<ProjectModel[]>([])
+const [projectListPending, loadProjectList] = useAsyncRequest(async () => {
+  const result = await store.dispatch('projects/fetchProjects')
+  projectList.value = result
+})
+loadProjectList()
 const removeProject = (id: string) => store.commit('projects/removeProject', id)
 const createProject = () => store.dispatch('projects/createProject')
 </script>
