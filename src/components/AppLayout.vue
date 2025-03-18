@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="d-flex align-center ga-1">
-      {{ title }}
+      <div class="text-truncate">{{ title }}</div>
       <slot name="action" />
     </h1>
 
