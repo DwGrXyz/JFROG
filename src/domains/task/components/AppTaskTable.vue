@@ -26,13 +26,22 @@
           <td>{{ task.dueDate || '-' }}</td>
 
           <td>
-            <v-btn
-              v-if="editable"
-              :icon="mdiTrashCan"
-              variant="text"
-              size="small"
-              @click.prevent="removeTask(task.id)"
-            />
+            <div v-if="editable" class="d-flex ga-2">
+              <v-btn
+                :to="getTaskEditRoute(projectId, task.id)"
+                :icon="mdiPencil"
+                variant="text"
+                size="small"
+              />
+
+              <v-btn
+                v-if="editable"
+                :icon="mdiTrashCan"
+                variant="text"
+                size="small"
+                @click.prevent="removeTask(task.id)"
+              />
+            </div>
           </td>
         </tr>
       </tbody>
@@ -47,11 +56,11 @@
 <script setup lang="ts">
 import { useAppStore } from '@/store'
 import { computed } from 'vue'
-import { mdiTrashCan } from '@mdi/js'
+import { mdiPencil, mdiTrashCan } from '@mdi/js'
 import type { TaskModel } from '@/domains/task/store/taskModel'
 import AppTaskPriority from '@/domains/task/components/AppTaskPriority.vue'
 import AppTaskStatus from '@/domains/task/components/AppTaskStatus.vue'
-import { getTaskCreateRoute } from '@/router'
+import { getTaskCreateRoute, getTaskEditRoute } from '@/router'
 import AppCreateItem from '@/components/AppCreateItem.vue'
 
 const props = defineProps<{
