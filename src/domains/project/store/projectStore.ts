@@ -2,6 +2,7 @@ import type { Module } from 'vuex/types/index.js'
 import { type ProjectModel } from './projectModel'
 import { genUniqueId } from '@/utils/genUniqueId'
 import { mockApi } from '@/utils/mockApi'
+import type { CreatePayload } from '@/store/types'
 
 export type ProjectStoreState = {
   projects: ProjectModel[]
@@ -49,12 +50,15 @@ const projectStoreModule: Module<ProjectStoreState, unknown> = {
 
       return id
     },
-    createProject: async ({ commit, dispatch }) => {
+    createProject: async (
+      { commit, dispatch },
+      projectForm: CreatePayload<ProjectModel>,
+    ) => {
       await mockApi()
       const id = await dispatch('createUniqueId')
-      const project = { id, title: `Project ${id}` }
+      const project = { ...projectForm, id }
       commit('addProject', project)
-      return project
+      return id
     },
   },
 }

@@ -51,14 +51,18 @@ const cancelRoute = computed(() => {
 })
 
 const router = useRouter()
-const updateProject = () => {
-  if (!project.value) return
-
-  const newProject: ProjectModel = {
-    id: project.value.id,
-    title: projectTitle.value,
+const updateProject = async () => {
+  if (!props.projectId) {
+    await store.dispatch('projects/createProject', {
+      title: projectTitle.value,
+    })
+  } else {
+    const newProject: ProjectModel = {
+      id: props.projectId,
+      title: projectTitle.value,
+    }
+    await store.commit('projects/updateProject', newProject)
   }
-  store.commit('projects/updateProject', newProject)
 
   router.push(cancelRoute.value)
 }
