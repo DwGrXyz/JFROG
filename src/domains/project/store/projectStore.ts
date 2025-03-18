@@ -17,9 +17,6 @@ const projectStoreModule: Module<ProjectStoreState, unknown> = {
       state.projects.find((project) => project.id === id),
   },
   mutations: {
-    removeProject: (state, id: string) => {
-      state.projects = state.projects.filter((project) => project.id !== id)
-    },
     addProject: (state, project: ProjectModel) => {
       state.projects = [...state.projects, project]
     },
@@ -27,6 +24,9 @@ const projectStoreModule: Module<ProjectStoreState, unknown> = {
       state.projects = state.projects.map((projectI) =>
         projectI.id === project.id ? project : projectI,
       )
+    },
+    removeProject: (state, id: string) => {
+      state.projects = state.projects.filter((project) => project.id !== id)
     },
   },
   actions: {

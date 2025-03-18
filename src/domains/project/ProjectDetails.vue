@@ -16,6 +16,7 @@
             <th>Priority</th>
             <th>Status</th>
             <th class="text-no-wrap">Due date</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +30,15 @@
             <td><AppProjectStatus :status="task.status" /></td>
 
             <td>{{ task.dueDate || '-' }}</td>
+
+            <td>
+              <v-btn
+                :icon="mdiTrashCan"
+                variant="text"
+                size="small"
+                @click.prevent="removeTask(task.id)"
+              />
+            </td>
           </tr>
         </tbody>
       </v-table>
@@ -47,11 +57,11 @@ import type { ProjectModel } from './store/projectModel'
 import NotFoundPage from '@/components/NotFoundPage.vue'
 import { getProjectFormRoute, getTaskCreateRoute } from '@/router'
 import AppLayout from '@/components/AppLayout.vue'
-import { mdiPencil } from '@mdi/js'
-import type { TaskModel } from '../task/store/taskModel'
+import { mdiPencil, mdiTrashCan } from '@mdi/js'
+import type { TaskModel } from '@/domains/task/store/taskModel'
 import AppCreateItem from '@/components/AppCreateItem.vue'
-import AppProjectPriority from './components/AppProjectPriority.vue'
-import AppProjectStatus from './components/AppProjectStatus.vue'
+import AppProjectPriority from '@/domains/project/components/AppProjectPriority.vue'
+import AppProjectStatus from '@/domains/project/components/AppProjectStatus.vue'
 
 const props = defineProps<{
   projectId: string
@@ -64,7 +74,9 @@ const project = computed<ProjectModel | undefined>(() =>
 const tasks = computed<TaskModel[]>(() =>
   store.getters['tasks/getTasksByProjectId'](props.projectId),
 )
-const createTaskRoute = computed(() => getTaskCreateRoute(props.projectId))
 
+const removeTask = (id: string) => store.commit('tasks/removeTask', id)
+
+const createTaskRoute = computed(() => getTaskCreateRoute(props.projectId))
 const formRoute = computed(() => getProjectFormRoute(props.projectId))
 </script>

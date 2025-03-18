@@ -11,7 +11,7 @@
 
         <template v-slot:append>
           <v-btn
-            :icon="mdiClose"
+            :icon="mdiTrashCan"
             variant="text"
             size="small"
             @click.prevent="removeProject(project.id)"
@@ -31,9 +31,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { getProjectDetailsRoute } from '@/router'
-import { mdiClose } from '@mdi/js'
+import { mdiTrashCan } from '@mdi/js'
 import { useAppStore } from '@/store'
-import AppLayout from '../../components/AppLayout.vue'
+import AppLayout from '@/components/AppLayout.vue'
 import AppCreateItem from '@/components/AppCreateItem.vue'
 
 const store = useAppStore()

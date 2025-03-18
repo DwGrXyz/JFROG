@@ -22,6 +22,9 @@ const taskStoreModule: Module<TaskStoreState, unknown> = {
     addTask: (state, task: TaskModel) => {
       state.tasks = [...state.tasks, task]
     },
+    removeTask: (state, id: string) => {
+      state.tasks = state.tasks.filter((task) => task.id !== id)
+    },
   },
   actions: {
     createUniqueId: ({ getters }) => {
