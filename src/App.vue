@@ -11,6 +11,7 @@ import { getProjectListRoute } from './router'
       </RouterLink>
       <span>Test task</span>
     </header>
+    <hr />
 
     <RouterView />
   </v-app>

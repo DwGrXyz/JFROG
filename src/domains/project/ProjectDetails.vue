@@ -1,6 +1,6 @@
 <template>
   <NotFoundPage v-if="!project" />
-  <AppLayout v-else :title="project.title">
+  <AppLayout v-else :title="`Project: ${project.title}`">
     <template v-slot:action>
       <v-btn :to="formRoute" :icon="mdiPencil" variant="text" />
     </template>
