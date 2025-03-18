@@ -15,9 +15,13 @@
       </thead>
       <tbody>
         <tr v-for="task in tasks" :key="task.id">
-          <td>{{ task.title }}</td>
+          <td class="app-task-table__title text-truncate">
+            {{ task.title }}
+          </td>
 
-          <td>{{ task.description || '-' }}</td>
+          <td class="text-break">
+            {{ task.description || '-' }}
+          </td>
 
           <td><AppTaskPriority :priority="task.priority" /></td>
 
@@ -77,3 +81,10 @@ const removeTask = (id: string) => store.commit('tasks/removeTask', id)
 
 const createTaskRoute = computed(() => getTaskCreateRoute(props.projectId))
 </script>
+
+<style lang="css" scoped>
+.app-task-table__title {
+  max-width: 1px;
+  width: 35%;
+}
+</style>
