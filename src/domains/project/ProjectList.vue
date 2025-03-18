@@ -36,12 +36,14 @@ import { computed } from 'vue'
 
 const store = useAppStore()
 
-const [projectList, projectListPending] = useAsyncDataFetch<ProjectModel[]>(
-  [],
-  () => store.dispatch('projects/fetchProjects'),
-)
+const [projectList, projectListPending, fetchProjectList] = useAsyncDataFetch<
+  ProjectModel[]
+>([], () => store.dispatch('projects/fetchProjects'))
 
-const removeProject = (id: string) => store.commit('projects/removeProject', id)
+const removeProject = async (id: string) => {
+  await store.commit('projects/removeProject', id)
+  await fetchProjectList()
+}
 
 const createProjectRoute = computed(() => getProjectCreateRoute())
 </script>

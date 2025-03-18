@@ -17,7 +17,7 @@ export const useAsyncRequest = (
 export const useAsyncDataFetch = <T>(
   defaultData: T,
   callback: () => Promise<unknown>,
-): [Ref<T>, Ref<boolean>] => {
+): [Ref<T>, Ref<boolean>, () => Promise<void>] => {
   const data = ref<T>(defaultData)
   const [pending, run] = useAsyncRequest(async () => {
     const result = await callback()
@@ -25,5 +25,5 @@ export const useAsyncDataFetch = <T>(
   })
   run()
 
-  return [data as Ref<T>, pending]
+  return [data as Ref<T>, pending, run]
 }
