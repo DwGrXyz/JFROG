@@ -1,9 +1,9 @@
 <template>
-  <NotFoundPage v-if="!project" />
-  <AppLayout v-else title="Edit project">
+  <NotFoundPage v-if="projectId && !project" />
+  <AppLayout v-else :title="projectId ? 'Edit project' : 'Create project'">
     <v-text-field label="Title" v-model="projectTitle" />
 
-    <AppSaveCancel :cancel-route="detailsRoute" @save="updateProject" />
+    <AppSaveCancel :cancel-route="cancelRoute" @save="updateProject" />
 
     <AppTaskTable
       v-if="projectId"
@@ -20,7 +20,7 @@ import { computed, ref } from 'vue'
 import type { ProjectModel } from './store/projectModel'
 import NotFoundPage from '@/components/NotFoundPage.vue'
 import AppLayout from '@/components/AppLayout.vue'
-import { getProjectDetailsRoute } from '@/router'
+import { getProjectDetailsRoute, getProjectListRoute } from '@/router'
 import { useRouter } from 'vue-router'
 import AppSaveCancel from '@/components/AppSaveCancel.vue'
 import AppTaskTable from '../task/components/AppTaskTable.vue'
@@ -35,7 +35,10 @@ const project = computed<ProjectModel | undefined>(() =>
 )
 const projectTitle = ref(project.value?.title || '')
 
-const detailsRoute = computed(() => getProjectDetailsRoute(props.projectId))
+const cancelRoute = computed(() => {
+  if (props.projectId) return getProjectDetailsRoute(props.projectId)
+  return getProjectListRoute()
+})
 
 const router = useRouter()
 const updateProject = () => {
@@ -47,6 +50,6 @@ const updateProject = () => {
   }
   store.commit('projects/updateProject', newProject)
 
-  router.push(detailsRoute.value)
+  router.push(cancelRoute.value)
 }
 </script>

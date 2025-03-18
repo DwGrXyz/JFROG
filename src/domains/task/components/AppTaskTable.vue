@@ -51,9 +51,7 @@
       </tbody>
     </v-table>
 
-    <v-btn v-if="editable" class="mt-2" :to="createTaskRoute">
-      <AppCreateItem />
-    </v-btn>
+    <AppCreateItem v-if="editable" class="mt-2" :to="createTaskRoute" />
   </div>
 </template>
 
