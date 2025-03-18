@@ -55,7 +55,7 @@ const taskCreateRoute: RouteRecordRaw = {
   props: true,
 }
 export const getTaskCreateRoute = (projectId: string): RouteLocationRaw => ({
-  name: taskEditRoute.name,
+  name: taskCreateRoute.name,
   params: { projectId },
 })
 

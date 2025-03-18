@@ -19,7 +19,11 @@
         </template>
       </v-list-item>
 
-      <AppCreateItem @click="createProject" />
+      <v-list-item link @click="createProject">
+        <v-list-item-title>
+          <AppCreateItem />
+        </v-list-item-title>
+      </v-list-item>
     </v-list>
   </AppLayout>
 </template>

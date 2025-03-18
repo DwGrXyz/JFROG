@@ -1,12 +1,8 @@
 <template>
-  <v-list-item link>
-    <v-list-item-title>
-      <div class="d-flex align-center ga-1">
-        <v-icon :icon="mdiPlus" size="small" />
-        Create
-      </div>
-    </v-list-item-title>
-  </v-list-item>
+  <div class="d-flex align-center ga-1">
+    <v-icon :icon="mdiPlus" size="small" />
+    Create
+  </div>
 </template>
 
 <script setup lang="ts">
