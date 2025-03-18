@@ -5,48 +5,7 @@
       <v-btn :to="formRoute" :icon="mdiPencil" variant="text" />
     </template>
 
-    <div>
-      <h2>Tasks:</h2>
-
-      <v-table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th class="w-100">Description</th>
-            <th>Priority</th>
-            <th>Status</th>
-            <th class="text-no-wrap">Due date</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="task in tasks" :key="task.id">
-            <td>{{ task.title }}</td>
-
-            <td>{{ task.description || '-' }}</td>
-
-            <td><AppProjectPriority :priority="task.priority" /></td>
-
-            <td><AppProjectStatus :status="task.status" /></td>
-
-            <td>{{ task.dueDate || '-' }}</td>
-
-            <td>
-              <v-btn
-                :icon="mdiTrashCan"
-                variant="text"
-                size="small"
-                @click.prevent="removeTask(task.id)"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </v-table>
-
-      <v-btn :to="createTaskRoute">
-        <AppCreateItem />
-      </v-btn>
-    </div>
+    <AppTaskTable :project-id="projectId" />
   </AppLayout>
 </template>
 
@@ -55,13 +14,10 @@ import { useAppStore } from '@/store'
 import { computed } from 'vue'
 import type { ProjectModel } from './store/projectModel'
 import NotFoundPage from '@/components/NotFoundPage.vue'
-import { getProjectFormRoute, getTaskCreateRoute } from '@/router'
+import { getProjectFormRoute } from '@/router'
 import AppLayout from '@/components/AppLayout.vue'
-import { mdiPencil, mdiTrashCan } from '@mdi/js'
-import type { TaskModel } from '@/domains/task/store/taskModel'
-import AppCreateItem from '@/components/AppCreateItem.vue'
-import AppProjectPriority from '@/domains/project/components/AppProjectPriority.vue'
-import AppProjectStatus from '@/domains/project/components/AppProjectStatus.vue'
+import { mdiPencil } from '@mdi/js'
+import AppTaskTable from '@/domains/task/components/AppTaskTable.vue'
 
 const props = defineProps<{
   projectId: string
@@ -71,12 +27,6 @@ const store = useAppStore()
 const project = computed<ProjectModel | undefined>(() =>
   store.getters['projects/getProject'](props.projectId),
 )
-const tasks = computed<TaskModel[]>(() =>
-  store.getters['tasks/getTasksByProjectId'](props.projectId),
-)
 
-const removeTask = (id: string) => store.commit('tasks/removeTask', id)
-
-const createTaskRoute = computed(() => getTaskCreateRoute(props.projectId))
 const formRoute = computed(() => getProjectFormRoute(props.projectId))
 </script>

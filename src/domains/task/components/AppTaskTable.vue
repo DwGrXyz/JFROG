@@ -1,0 +1,70 @@
+<template>
+  <div>
+    <h2>Tasks:</h2>
+
+    <v-table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th class="w-100">Description</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th class="text-no-wrap">Due date</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="task in tasks" :key="task.id">
+          <td>{{ task.title }}</td>
+
+          <td>{{ task.description || '-' }}</td>
+
+          <td><AppTaskPriority :priority="task.priority" /></td>
+
+          <td><AppTaskStatus :status="task.status" /></td>
+
+          <td>{{ task.dueDate || '-' }}</td>
+
+          <td>
+            <v-btn
+              v-if="editable"
+              :icon="mdiTrashCan"
+              variant="text"
+              size="small"
+              @click.prevent="removeTask(task.id)"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </v-table>
+
+    <v-btn v-if="editable" class="mt-2" :to="createTaskRoute">
+      <AppCreateItem />
+    </v-btn>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useAppStore } from '@/store'
+import { computed } from 'vue'
+import { mdiTrashCan } from '@mdi/js'
+import type { TaskModel } from '@/domains/task/store/taskModel'
+import AppTaskPriority from '@/domains/task/components/AppTaskPriority.vue'
+import AppTaskStatus from '@/domains/task/components/AppTaskStatus.vue'
+import { getTaskCreateRoute } from '@/router'
+import AppCreateItem from '@/components/AppCreateItem.vue'
+
+const props = defineProps<{
+  projectId: string
+  editable?: boolean
+}>()
+
+const store = useAppStore()
+const tasks = computed<TaskModel[]>(() =>
+  store.getters['tasks/getTasksByProjectId'](props.projectId),
+)
+
+const removeTask = (id: string) => store.commit('tasks/removeTask', id)
+
+const createTaskRoute = computed(() => getTaskCreateRoute(props.projectId))
+</script>
