@@ -7,7 +7,7 @@
 
     <div class="mt-6">
       <v-progress-circular v-if="fetching" indeterminate />
-      <slot />
+      <slot v-else />
     </div>
   </div>
 </template>

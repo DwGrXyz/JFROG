@@ -1,5 +1,8 @@
 <template>
-  <AppLayout :title="taskId ? 'Edit task' : 'Create task'">
+  <AppLayout
+    :title="taskId ? 'Edit task' : 'Create task'"
+    :fetching="taskPending"
+  >
     <v-form
       ref="form"
       class="d-flex flex-column ga-2"
@@ -37,7 +40,7 @@
 
 <script setup lang="ts">
 import { useAppStore } from '@/store'
-import { computed, reactive, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import {
   taskPriorityVariant,
   taskStatusVariant,
@@ -49,6 +52,7 @@ import AppLayout from '@/components/AppLayout.vue'
 import type { CreatePayload } from '@/store/types'
 import { useRouter } from 'vue-router'
 import { requiredRule } from '@/utils/requiredRule'
+import { useAsyncDataFetch } from '@/compositions/useAsyncRequest'
 
 const props = defineProps<{
   projectId: string
@@ -58,12 +62,16 @@ const props = defineProps<{
 const form = ref()
 
 const store = useAppStore()
-const task = computed<TaskModel | null>(() => {
-  if (!props.taskId) return null
-  const item = store.getters['tasks/getTask'](props.taskId)
-  if (!item || item.projectId !== props.projectId) return null
-  return item
-})
+
+const [task, taskPending] = useAsyncDataFetch<TaskModel | undefined>(
+  undefined,
+  async () => {
+    if (!props.taskId) return null
+    const item = await store.dispatch('tasks/fetchTask', props.taskId)
+    if (!item || item.projectId !== props.projectId) return null
+    return item
+  },
+)
 
 const getDefaultFormValues = (): CreatePayload<TaskModel> => ({
   projectId: props.projectId,
@@ -73,9 +81,10 @@ const getDefaultFormValues = (): CreatePayload<TaskModel> => ({
   status: 'pending',
   dueDate: '',
 })
-const taskForm = reactive<CreatePayload<TaskModel>>(
-  task.value ?? getDefaultFormValues(),
-)
+const taskForm = ref<CreatePayload<TaskModel>>(getDefaultFormValues())
+watch(task, () => {
+  taskForm.value = task.value ? { ...task.value } : getDefaultFormValues()
+})
 
 const router = useRouter()
 const saveTask = async () => {

@@ -39,6 +39,7 @@ const [project, projectPending] = useAsyncDataFetch<ProjectModel | undefined>(
     return store.dispatch('projects/fetchProject', props.projectId)
   },
 )
+
 const projectTitle = ref('')
 watch(project, () => {
   projectTitle.value = project.value?.title || ''

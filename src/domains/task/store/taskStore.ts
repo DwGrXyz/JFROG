@@ -2,6 +2,7 @@ import type { Module } from 'vuex/types/index.js'
 import type { TaskModel } from './taskModel'
 import { genUniqueId } from '@/utils/genUniqueId'
 import type { CreatePayload } from '@/store/types'
+import { mockApi } from '@/utils/mockApi'
 
 export type TaskStoreState = {
   tasks: TaskModel[]
@@ -32,6 +33,10 @@ const taskStoreModule: Module<TaskStoreState, unknown> = {
     },
   },
   actions: {
+    fetchTask: async ({ getters }, id: string) => {
+      await mockApi()
+      return getters['getTask'](id)
+    },
     createUniqueId: ({ getters }) => {
       let id: string
 
