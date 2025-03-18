@@ -6,7 +6,7 @@ export type ProjectStoreState = {
   projects: ProjectModel[]
 }
 
-const projectStoreModule: Module<ProjectStoreState, any> = {
+const projectStoreModule: Module<ProjectStoreState, unknown> = {
   namespaced: true,
   state: () => ({
     projects: [],

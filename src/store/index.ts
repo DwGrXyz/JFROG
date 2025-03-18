@@ -1,7 +1,9 @@
 import projectStoreModule, {
   type ProjectStoreState,
-} from '@/domains/project/store'
-import taskStoreModule, { type TaskStoreState } from '@/domains/task/taskStore'
+} from '@/domains/project/store/projectStore'
+import taskStoreModule, {
+  type TaskStoreState,
+} from '@/domains/task/store/taskStore'
 import { createStore, useStore } from 'vuex'
 import VuexPersistence from 'vuex-persist'
 

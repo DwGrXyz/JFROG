@@ -7,7 +7,7 @@ export type TaskStoreState = {
   tasks: TaskModel[]
 }
 
-const taskStoreModule: Module<TaskStoreState, any> = {
+const taskStoreModule: Module<TaskStoreState, unknown> = {
   namespaced: true,
   state: () => ({
     tasks: [],

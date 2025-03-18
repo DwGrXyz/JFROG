@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TaskPriority } from '@/domains/task/taskModel'
+import type { TaskPriority } from '@/domains/task/store/taskModel'
 import { computed } from 'vue'
 
 const props = defineProps<{

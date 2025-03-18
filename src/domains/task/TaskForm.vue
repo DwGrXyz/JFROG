@@ -42,7 +42,7 @@ import {
   taskPriorityVariant,
   taskStatusVariant,
   type TaskModel,
-} from './taskModel'
+} from './store/taskModel'
 import AppSaveCancel from '@/components/AppSaveCancel.vue'
 import { getProjectDetailsRoute } from '@/router'
 import AppLayout from '@/components/AppLayout.vue'
