@@ -6,29 +6,22 @@ import {
   type RouteRecordRaw,
 } from 'vue-router'
 
-const projectFormRoute: RouteRecordRaw = {
-  path: '/:projectId/form',
-  name: 'projectFormRoute',
-  component: () => import('../domains/project/ProjectForm.vue'),
-  props: true,
+const projectListRoute: RouteRecordRaw = {
+  path: '/',
+  name: 'projectListRoute',
+  component: () => import('../domains/project/ProjectList.vue'),
 }
-export const getProjectFormRoute = (projectId: string): RouteLocationRaw => ({
-  name: projectFormRoute.name,
-  params: { projectId },
+export const getProjectListRoute = (): RouteLocationRaw => ({
+  name: projectListRoute.name,
 })
 
-const taskFormRoute: RouteRecordRaw = {
-  path: '/:projectId/:taskId/form',
-  name: 'taskFormRoute',
-  component: () => import('../domains/task/TaskForm.vue'),
-  props: true,
+const projectCreateRoute: RouteRecordRaw = {
+  path: '/new',
+  name: 'projectCreateRoute',
+  component: () => import('../domains/project/ProjectForm.vue'),
 }
-export const getTaskFormRoute = (
-  projectId: string,
-  taskId: string,
-): RouteLocationRaw => ({
-  name: taskFormRoute.name,
-  params: { projectId, taskId },
+export const getProjectCreateRoute = (): RouteLocationRaw => ({
+  name: projectCreateRoute.name,
 })
 
 const projectDetailsRoute: RouteRecordRaw = {
@@ -44,13 +37,40 @@ export const getProjectDetailsRoute = (
   params: { projectId },
 })
 
-const projectListRoute: RouteRecordRaw = {
-  path: '/',
-  name: 'projectListRoute',
-  component: () => import('../domains/project/ProjectList.vue'),
+const projectEditRoute: RouteRecordRaw = {
+  path: '/:projectId/edit',
+  name: 'projectEditRoute',
+  component: () => import('../domains/project/ProjectForm.vue'),
+  props: true,
 }
-export const getProjectListRoute = (): RouteLocationRaw => ({
-  name: projectListRoute.name,
+export const getProjectFormRoute = (projectId: string): RouteLocationRaw => ({
+  name: projectEditRoute.name,
+  params: { projectId },
+})
+
+const taskCreateRoute: RouteRecordRaw = {
+  path: '/:projectId/tasks/new',
+  name: 'taskCreateRoute',
+  component: () => import('../domains/task/TaskForm.vue'),
+  props: true,
+}
+export const getTaskCreateRoute = (projectId: string): RouteLocationRaw => ({
+  name: taskEditRoute.name,
+  params: { projectId },
+})
+
+const taskEditRoute: RouteRecordRaw = {
+  path: '/:projectId/tasks/:taskId/edit',
+  name: 'taskEditRoute',
+  component: () => import('../domains/task/TaskForm.vue'),
+  props: true,
+}
+export const getTaskEditRoute = (
+  projectId: string,
+  taskId: string,
+): RouteLocationRaw => ({
+  name: taskEditRoute.name,
+  params: { projectId, taskId },
 })
 
 const notFoundRoute: RouteRecordRaw = {
@@ -62,9 +82,11 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     projectListRoute,
+    projectCreateRoute,
     projectDetailsRoute,
-    projectFormRoute,
-    taskFormRoute,
+    projectEditRoute,
+    taskCreateRoute,
+    taskEditRoute,
     notFoundRoute,
   ],
 })

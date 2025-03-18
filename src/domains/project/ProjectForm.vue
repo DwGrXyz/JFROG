@@ -20,7 +20,7 @@ import { getProjectDetailsRoute } from '@/router'
 import { useRouter } from 'vue-router'
 
 const props = defineProps<{
-  projectId: string
+  projectId?: string
 }>()
 
 const store = useAppStore()

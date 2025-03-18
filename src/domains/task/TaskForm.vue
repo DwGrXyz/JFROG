@@ -3,6 +3,6 @@
 <script setup lang="ts">
 defineProps<{
   projectId: string
-  taskId: string
+  taskId?: string
 }>()
 </script>
