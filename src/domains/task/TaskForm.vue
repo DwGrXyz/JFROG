@@ -80,7 +80,11 @@ const taskForm = reactive<CreatePayload<TaskModel>>(
 const router = useRouter()
 const saveTask = async () => {
   if (!form.value.isValid) return
-  await store.dispatch('tasks/createTask', taskForm)
+  if (props.taskId) {
+    await store.dispatch('tasks/updateTask', taskForm)
+  } else {
+    await store.dispatch('tasks/createTask', taskForm)
+  }
   router.push(projectRoute.value)
 }
 
