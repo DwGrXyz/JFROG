@@ -34,16 +34,16 @@ import { useAppStore } from '@/store'
 import AppLayout from '@/components/AppLayout.vue'
 import AppCreateItem from '@/components/AppCreateItem.vue'
 import type { ProjectModel } from './store/projectModel'
-import { useAsyncRequest } from '@/compositions/useAsyncRequest'
-import { computed, ref } from 'vue'
+import { useAsyncDataFetch } from '@/compositions/useAsyncRequest'
+import { computed } from 'vue'
 
 const store = useAppStore()
-const projectList = ref<ProjectModel[]>([])
-const [projectListPending, loadProjectList] = useAsyncRequest(async () => {
-  const result = await store.dispatch('projects/fetchProjects')
-  projectList.value = result
-})
-loadProjectList()
+
+const [projectList, projectListPending] = useAsyncDataFetch<ProjectModel[]>(
+  [],
+  () => store.dispatch('projects/fetchProjects'),
+)
+
 const removeProject = (id: string) => store.commit('projects/removeProject', id)
 
 const createProjectRoute = computed(() => getProjectCreateRoute())
