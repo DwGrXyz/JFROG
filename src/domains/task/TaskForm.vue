@@ -1,30 +1,43 @@
 <template>
-  <AppLayout title="Edit task">
-    <v-text-field v-model="taskForm.title" label="Title" />
+  <AppLayout :title="taskId ? 'Edit task' : 'Create task'">
+    <v-form
+      ref="form"
+      class="d-flex flex-column ga-2"
+      @submit.prevent="saveTask"
+    >
+      <v-text-field
+        v-model="taskForm.title"
+        label="Title"
+        required
+        :rules="[requiredRule]"
+      />
 
-    <v-textarea v-model="taskForm.description" label="Description" />
+      <v-textarea v-model="taskForm.description" label="Description" />
 
-    <v-select
-      v-model="taskForm.priority"
-      label="Priority"
-      :items="taskPriorityVariant"
-    />
+      <v-select
+        v-model="taskForm.priority"
+        label="Priority"
+        :items="taskPriorityVariant"
+        required
+      />
 
-    <v-select
-      v-model="taskForm.status"
-      label="Status"
-      :items="taskStatusVariant"
-    />
+      <v-select
+        v-model="taskForm.status"
+        label="Status"
+        :items="taskStatusVariant"
+        required
+      />
 
-    <v-text-field v-model="taskForm.dueDate" label="Due date" type="date" />
+      <v-text-field v-model="taskForm.dueDate" label="Due date" type="date" />
 
-    <AppSaveCancel :cancel-route="projectRoute" @save="saveTask" />
+      <AppSaveCancel :cancel-route="projectRoute" />
+    </v-form>
   </AppLayout>
 </template>
 
 <script setup lang="ts">
 import { useAppStore } from '@/store'
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import {
   taskPriorityVariant,
   taskStatusVariant,
@@ -35,11 +48,14 @@ import { getProjectDetailsRoute } from '@/router'
 import AppLayout from '@/components/AppLayout.vue'
 import type { CreatePayload } from '@/store/types'
 import { useRouter } from 'vue-router'
+import { requiredRule } from '@/utils/requiredRule'
 
 const props = defineProps<{
   projectId: string
   taskId?: string
 }>()
+
+const form = ref()
 
 const store = useAppStore()
 const task = computed<TaskModel | null>(() => {
@@ -63,6 +79,7 @@ const taskForm = reactive<CreatePayload<TaskModel>>(
 
 const router = useRouter()
 const saveTask = async () => {
+  if (!form.value.isValid) return
   await store.dispatch('tasks/createTask', taskForm)
   router.push(getProjectDetailsRoute(props.projectId))
 }
