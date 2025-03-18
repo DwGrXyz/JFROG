@@ -8,7 +8,30 @@
     <div>
       <h2>Tasks:</h2>
 
-      {{ tasks }}
+      <v-table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th class="w-100">Description</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th class="text-no-wrap">Due date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="task in tasks" :key="task.id">
+            <td>{{ task.title }}</td>
+
+            <td>{{ task.description || '-' }}</td>
+
+            <td><AppProjectPriority :priority="task.priority" /></td>
+
+            <td><AppProjectStatus :status="task.status" /></td>
+
+            <td>{{ task.dueDate || '-' }}</td>
+          </tr>
+        </tbody>
+      </v-table>
 
       <v-btn :to="createTaskRoute">
         <AppCreateItem />
@@ -27,6 +50,8 @@ import AppLayout from '@/components/AppLayout.vue'
 import { mdiPencil } from '@mdi/js'
 import type { TaskModel } from '../task/taskModel'
 import AppCreateItem from '@/components/AppCreateItem.vue'
+import AppProjectPriority from './components/AppProjectPriority.vue'
+import AppProjectStatus from './components/AppProjectStatus.vue'
 
 const props = defineProps<{
   projectId: string
