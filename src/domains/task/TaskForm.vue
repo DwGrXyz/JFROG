@@ -90,9 +90,9 @@ const router = useRouter()
 const saveTask = async () => {
   if (!form.value.isValid) return
   if (props.taskId) {
-    await store.dispatch('tasks/updateTask', taskForm)
+    await store.commit('tasks/updateTask', taskForm.value)
   } else {
-    await store.dispatch('tasks/createTask', taskForm)
+    await store.dispatch('tasks/createTask', taskForm.value)
   }
   router.push(projectRoute.value)
 }

@@ -23,7 +23,7 @@ const taskStoreModule: Module<TaskStoreState, unknown> = {
     addTask: (state, task: TaskModel) => {
       state.tasks = [...state.tasks, task]
     },
-    updateProject: (state, task: TaskModel) => {
+    updateTask: (state, task: TaskModel) => {
       state.tasks = state.tasks.map((taskI) =>
         taskI.id === task.id ? task : taskI,
       )
