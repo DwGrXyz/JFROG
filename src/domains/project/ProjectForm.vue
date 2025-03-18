@@ -1,5 +1,6 @@
 <template>
-  <NotFoundPage v-if="projectId && !project" />
+  <AppLayout v-if="projectPending" :title="`Project: #${projectId}`" fetching />
+  <NotFoundPage v-else-if="projectId && !project" />
   <AppLayout v-else :title="projectId ? 'Edit project' : 'Create project'">
     <v-text-field label="Title" v-model="projectTitle" />
 
@@ -16,7 +17,7 @@
 
 <script setup lang="ts">
 import { useAppStore } from '@/store'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import type { ProjectModel } from './store/projectModel'
 import NotFoundPage from '@/components/NotFoundPage.vue'
 import AppLayout from '@/components/AppLayout.vue'
@@ -24,16 +25,24 @@ import { getProjectDetailsRoute, getProjectListRoute } from '@/router'
 import { useRouter } from 'vue-router'
 import AppSaveCancel from '@/components/AppSaveCancel.vue'
 import AppTaskTable from '../task/components/AppTaskTable.vue'
+import { useAsyncDataFetch } from '@/compositions/useAsyncRequest'
 
 const props = defineProps<{
   projectId?: string
 }>()
 
 const store = useAppStore()
-const project = computed<ProjectModel | undefined>(() =>
-  store.getters['projects/getProject'](props.projectId),
+const [project, projectPending] = useAsyncDataFetch<ProjectModel | undefined>(
+  undefined,
+  async () => {
+    if (!props.projectId) return undefined
+    return store.dispatch('projects/fetchProject', props.projectId)
+  },
 )
-const projectTitle = ref(project.value?.title || '')
+const projectTitle = ref('')
+watch(project, () => {
+  projectTitle.value = project.value?.title || ''
+})
 
 const cancelRoute = computed(() => {
   if (props.projectId) return getProjectDetailsRoute(props.projectId)

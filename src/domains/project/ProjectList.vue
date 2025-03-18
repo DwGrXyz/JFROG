@@ -1,29 +1,26 @@
 <template>
-  <AppLayout title="Project list">
-    <v-progress-circular v-if="projectListPending" indeterminate />
-    <template v-else>
-      <v-list>
-        <v-list-item
-          v-for="project in projectList"
-          :key="project.id"
-          link
-          :to="getProjectDetailsRoute(project.id)"
-        >
-          <v-list-item-title>{{ project.title }}</v-list-item-title>
+  <AppLayout title="Project list" :fetching="projectListPending">
+    <v-list>
+      <v-list-item
+        v-for="project in projectList"
+        :key="project.id"
+        link
+        :to="getProjectDetailsRoute(project.id)"
+      >
+        <v-list-item-title>{{ project.title }}</v-list-item-title>
 
-          <template v-slot:append>
-            <v-btn
-              :icon="mdiTrashCan"
-              variant="text"
-              size="small"
-              @click.prevent="removeProject(project.id)"
-            />
-          </template>
-        </v-list-item>
-      </v-list>
+        <template v-slot:append>
+          <v-btn
+            :icon="mdiTrashCan"
+            variant="text"
+            size="small"
+            @click.prevent="removeProject(project.id)"
+          />
+        </template>
+      </v-list-item>
+    </v-list>
 
-      <AppCreateItem class="mt-2" :to="createProjectRoute" />
-    </template>
+    <AppCreateItem class="mt-2" :to="createProjectRoute" />
   </AppLayout>
 </template>
 

@@ -6,6 +6,7 @@
     </h1>
 
     <div class="mt-6">
+      <v-progress-circular v-if="fetching" indeterminate />
       <slot />
     </div>
   </div>
@@ -14,5 +15,6 @@
 <script setup lang="ts">
 defineProps<{
   title: string
+  fetching?: boolean
 }>()
 </script>

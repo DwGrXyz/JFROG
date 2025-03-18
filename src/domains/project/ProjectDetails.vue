@@ -1,5 +1,6 @@
 <template>
-  <NotFoundPage v-if="!project" />
+  <AppLayout v-if="projectPending" :title="`Project: #${projectId}`" fetching />
+  <NotFoundPage v-else-if="!project" />
   <AppLayout v-else :title="`Project: ${project.title}`">
     <template v-slot:action>
       <v-btn :to="formRoute" :icon="mdiPencil" variant="text" />
@@ -18,14 +19,17 @@ import { getProjectEditRoute } from '@/router'
 import AppLayout from '@/components/AppLayout.vue'
 import { mdiPencil } from '@mdi/js'
 import AppTaskTable from '@/domains/task/components/AppTaskTable.vue'
+import { useAsyncDataFetch } from '@/compositions/useAsyncRequest'
 
 const props = defineProps<{
   projectId: string
 }>()
 
 const store = useAppStore()
-const project = computed<ProjectModel | undefined>(() =>
-  store.getters['projects/getProject'](props.projectId),
+
+const [project, projectPending] = useAsyncDataFetch<ProjectModel | undefined>(
+  undefined,
+  () => store.dispatch('projects/fetchProject', props.projectId),
 )
 
 const formRoute = computed(() => getProjectEditRoute(props.projectId))
