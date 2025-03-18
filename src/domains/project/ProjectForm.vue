@@ -3,10 +3,7 @@
   <AppLayout v-else title="Edit project">
     <v-text-field label="Title" v-model="projectTitle" />
 
-    <div class="d-flex ga-2">
-      <v-btn :to="detailsRoute" text="Cancel" />
-      <v-btn text="Save" color="primary" @click="updateProject" />
-    </div>
+    <AppSaveCancel :cancel-route="detailsRoute" @save="updateProject" />
   </AppLayout>
 </template>
 
@@ -18,6 +15,7 @@ import NotFoundPage from '@/components/NotFoundPage.vue'
 import AppLayout from '@/components/AppLayout.vue'
 import { getProjectDetailsRoute } from '@/router'
 import { useRouter } from 'vue-router'
+import AppSaveCancel from '@/components/AppSaveCancel.vue'
 
 const props = defineProps<{
   projectId?: string
