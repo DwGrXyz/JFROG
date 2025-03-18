@@ -33,9 +33,13 @@ const taskStoreModule: Module<TaskStoreState, unknown> = {
     },
   },
   actions: {
+    fetchTasksByProjectId: async ({ getters }, projectId: string) => {
+      await mockApi()
+      return getters.getTasksByProjectId(projectId)
+    },
     fetchTask: async ({ getters }, id: string) => {
       await mockApi()
-      return getters['getTask'](id)
+      return getters.getTask(id)
     },
     createUniqueId: ({ getters }) => {
       let id: string

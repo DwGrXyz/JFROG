@@ -2,56 +2,60 @@
   <div>
     <h2>Tasks:</h2>
 
-    <v-table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th class="w-100">Description</th>
-          <th>Priority</th>
-          <th>Status</th>
-          <th class="text-no-wrap">Due date</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="task in tasks" :key="task.id">
-          <td class="app-task-table__title text-truncate">
-            {{ task.title }}
-          </td>
+    <v-progress-circular v-if="taskListPending" indeterminate />
 
-          <td class="text-break">
-            {{ task.description || '-' }}
-          </td>
+    <template v-else>
+      <v-table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th class="w-100">Description</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th class="text-no-wrap">Due date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="task in taskList" :key="task.id">
+            <td class="app-task-table__title text-truncate">
+              {{ task.title }}
+            </td>
 
-          <td><AppTaskPriority :priority="task.priority" /></td>
+            <td class="text-break">
+              {{ task.description || '-' }}
+            </td>
 
-          <td><AppTaskStatus :status="task.status" /></td>
+            <td><AppTaskPriority :priority="task.priority" /></td>
 
-          <td>{{ task.dueDate || '-' }}</td>
+            <td><AppTaskStatus :status="task.status" /></td>
 
-          <td>
-            <div v-if="editable" class="d-flex ga-2">
-              <v-btn
-                :to="getTaskEditRoute(projectId, task.id)"
-                :icon="mdiPencil"
-                variant="text"
-                size="small"
-              />
+            <td>{{ task.dueDate || '-' }}</td>
 
-              <v-btn
-                v-if="editable"
-                :icon="mdiTrashCan"
-                variant="text"
-                size="small"
-                @click.prevent="removeTask(task.id)"
-              />
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </v-table>
+            <td>
+              <div v-if="editable" class="d-flex ga-2">
+                <v-btn
+                  :to="getTaskEditRoute(projectId, task.id)"
+                  :icon="mdiPencil"
+                  variant="text"
+                  size="small"
+                />
 
-    <AppCreateItem v-if="editable" class="mt-2" :to="createTaskRoute" />
+                <v-btn
+                  v-if="editable"
+                  :icon="mdiTrashCan"
+                  variant="text"
+                  size="small"
+                  @click.prevent="removeTask(task.id)"
+                />
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </v-table>
+
+      <AppCreateItem v-if="editable" class="mt-2" :to="createTaskRoute" />
+    </template>
   </div>
 </template>
 
@@ -64,6 +68,7 @@ import AppTaskPriority from '@/domains/task/components/AppTaskPriority.vue'
 import AppTaskStatus from '@/domains/task/components/AppTaskStatus.vue'
 import { getTaskCreateRoute, getTaskEditRoute } from '@/router'
 import AppCreateItem from '@/components/AppCreateItem.vue'
+import { useAsyncDataFetch } from '@/compositions/useAsyncRequest'
 
 const props = defineProps<{
   projectId: string
@@ -71,11 +76,15 @@ const props = defineProps<{
 }>()
 
 const store = useAppStore()
-const tasks = computed<TaskModel[]>(() =>
-  store.getters['tasks/getTasksByProjectId'](props.projectId),
-)
 
-const removeTask = (id: string) => store.commit('tasks/removeTask', id)
+const [taskList, taskListPending, fetchTaskList] = useAsyncDataFetch<
+  TaskModel[]
+>([], () => store.dispatch('tasks/fetchTasksByProjectId', props.projectId))
+
+const removeTask = async (id: string) => {
+  await store.commit('tasks/removeTask', id)
+  await fetchTaskList()
+}
 
 const createTaskRoute = computed(() => getTaskCreateRoute(props.projectId))
 </script>

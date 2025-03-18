@@ -34,11 +34,11 @@ const projectStoreModule: Module<ProjectStoreState, unknown> = {
   actions: {
     fetchProjects: async ({ getters }) => {
       await mockApi()
-      return getters['getProjects']
+      return getters.getProjects
     },
     fetchProject: async ({ getters }, id: string) => {
       await mockApi()
-      return getters['getProject'](id)
+      return getters.getProject(id)
     },
     createUniqueId: ({ getters }) => {
       let id: string
