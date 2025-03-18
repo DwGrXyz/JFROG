@@ -1,31 +1,17 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import { getProjectListRoute } from './router'
 </script>
 
 <template>
-  <v-app>
-    <header>
-      <img
-        alt="Vue logo"
-        class="logo"
-        src="@/assets/logo.svg"
-        width="125"
-        height="125"
-      />
+  <v-app class="pa-4">
+    <header class="d-flex ga-2 align-center">
+      <RouterLink :to="getProjectListRoute()">
+        <img alt="Vue logo" src="@/assets/logo.svg" width="50" height="50" />
+      </RouterLink>
+      <span>Test task</span>
     </header>
 
     <RouterView />
   </v-app>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-</style>
