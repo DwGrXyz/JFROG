@@ -46,7 +46,7 @@
                   :icon="mdiTrashCan"
                   variant="text"
                   size="small"
-                  @click.prevent="removeTask(task.id)"
+                  @click.prevent="showRemoveConfirm(task.id)"
                 />
               </div>
             </td>
@@ -56,6 +56,8 @@
 
       <AppCreateItem v-if="editable" class="mt-2" :to="createTaskRoute" />
     </template>
+
+    <AppConfirm v-model="removeConfirmShown" @submit="removeTask" />
   </div>
 </template>
 
@@ -69,6 +71,8 @@ import AppTaskStatus from '@/domains/task/components/AppTaskStatus.vue'
 import { getTaskCreateRoute, getTaskEditRoute } from '@/router'
 import AppCreateItem from '@/components/AppCreateItem.vue'
 import { useAsyncDataFetch } from '@/compositions/useAsyncRequest'
+import { useRemoveItemConfirm } from '@/compositions/useRemoveItemConfirm'
+import AppConfirm from '@/components/AppConfirm.vue'
 
 const props = defineProps<{
   projectId: string
@@ -81,10 +85,14 @@ const [taskList, taskListPending, fetchTaskList] = useAsyncDataFetch<
   TaskModel[]
 >([], () => store.dispatch('tasks/fetchTasksByProjectId', props.projectId))
 
-const removeTask = async (id: string) => {
+const {
+  removeConfirmShown,
+  showRemoveConfirm,
+  remove: removeTask,
+} = useRemoveItemConfirm(async (id: string) => {
   await store.commit('tasks/removeTask', id)
   await fetchTaskList()
-}
+})
 
 const createTaskRoute = computed(() => getTaskCreateRoute(props.projectId))
 </script>
