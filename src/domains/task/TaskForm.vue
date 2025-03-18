@@ -44,7 +44,7 @@ import {
   type TaskModel,
 } from './store/taskModel'
 import AppSaveCancel from '@/components/AppSaveCancel.vue'
-import { getProjectDetailsRoute } from '@/router'
+import { getProjectDetailsRoute, getProjectEditRoute } from '@/router'
 import AppLayout from '@/components/AppLayout.vue'
 import type { CreatePayload } from '@/store/types'
 import { useRouter } from 'vue-router'
@@ -84,5 +84,5 @@ const saveTask = async () => {
   router.push(getProjectDetailsRoute(props.projectId))
 }
 
-const projectRoute = computed(() => getProjectDetailsRoute(props.projectId))
+const projectRoute = computed(() => getProjectEditRoute(props.projectId))
 </script>

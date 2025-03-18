@@ -43,7 +43,7 @@ const projectEditRoute: RouteRecordRaw = {
   component: () => import('../domains/project/ProjectForm.vue'),
   props: true,
 }
-export const getProjectFormRoute = (projectId: string): RouteLocationRaw => ({
+export const getProjectEditRoute = (projectId: string): RouteLocationRaw => ({
   name: projectEditRoute.name,
   params: { projectId },
 })

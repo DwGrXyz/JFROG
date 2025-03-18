@@ -14,7 +14,7 @@ import { useAppStore } from '@/store'
 import { computed } from 'vue'
 import type { ProjectModel } from './store/projectModel'
 import NotFoundPage from '@/components/NotFoundPage.vue'
-import { getProjectFormRoute } from '@/router'
+import { getProjectEditRoute } from '@/router'
 import AppLayout from '@/components/AppLayout.vue'
 import { mdiPencil } from '@mdi/js'
 import AppTaskTable from '@/domains/task/components/AppTaskTable.vue'
@@ -28,5 +28,5 @@ const project = computed<ProjectModel | undefined>(() =>
   store.getters['projects/getProject'](props.projectId),
 )
 
-const formRoute = computed(() => getProjectFormRoute(props.projectId))
+const formRoute = computed(() => getProjectEditRoute(props.projectId))
 </script>

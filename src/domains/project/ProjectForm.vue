@@ -4,6 +4,13 @@
     <v-text-field label="Title" v-model="projectTitle" />
 
     <AppSaveCancel :cancel-route="detailsRoute" @save="updateProject" />
+
+    <AppTaskTable
+      v-if="projectId"
+      class="mt-4"
+      :project-id="projectId"
+      editable
+    />
   </AppLayout>
 </template>
 
@@ -16,6 +23,7 @@ import AppLayout from '@/components/AppLayout.vue'
 import { getProjectDetailsRoute } from '@/router'
 import { useRouter } from 'vue-router'
 import AppSaveCancel from '@/components/AppSaveCancel.vue'
+import AppTaskTable from '../task/components/AppTaskTable.vue'
 
 const props = defineProps<{
   projectId?: string
