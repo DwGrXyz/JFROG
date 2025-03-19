@@ -1,7 +1,9 @@
 <template>
+  <NotFoundPage v-if="!projectPending && !project" />
   <AppLayout
+    v-else
     :title="taskId ? 'Edit task' : 'Create task'"
-    :fetching="taskPending"
+    :fetching="projectPending || taskPending"
   >
     <v-form
       ref="form"
@@ -54,6 +56,8 @@ import { useRouter } from 'vue-router'
 import { requiredRule } from '@/utils/requiredRule'
 import { useAsyncDataFetch } from '@/compositions/useAsyncRequest'
 import { useForm } from '@/compositions/useForm'
+import type { ProjectModel } from '../project/store/projectModel'
+import NotFoundPage from '@/components/NotFoundPage.vue'
 
 const props = defineProps<{
   projectId: string
@@ -61,6 +65,11 @@ const props = defineProps<{
 }>()
 
 const store = useAppStore()
+
+const [project, projectPending] = useAsyncDataFetch<ProjectModel | undefined>(
+  undefined,
+  async () => store.dispatch('projects/fetchProject', props.projectId),
+)
 
 const [task, taskPending] = useAsyncDataFetch<TaskModel | undefined>(
   undefined,
