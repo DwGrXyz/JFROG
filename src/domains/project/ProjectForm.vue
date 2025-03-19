@@ -2,9 +2,15 @@
   <AppLayout v-if="projectPending" :title="`Project: #${projectId}`" fetching />
   <NotFoundPage v-else-if="projectId && !project" />
   <AppLayout v-else :title="projectId ? 'Edit project' : 'Create project'">
-    <v-text-field label="Title" v-model="projectTitle" />
+    <v-form ref="form" @submit.prevent="saveProject">
+      <v-text-field
+        label="Title"
+        v-model="projectTitle"
+        :rules="[requiredRule]"
+      />
 
-    <AppSaveCancel :cancel-route="cancelRoute" @save="updateProject" />
+      <AppSaveCancel :cancel-route="cancelRoute" />
+    </v-form>
 
     <AppTaskTable
       v-if="projectId"
@@ -26,6 +32,8 @@ import { useRouter } from 'vue-router'
 import AppSaveCancel from '@/components/AppSaveCancel.vue'
 import AppTaskTable from '../task/components/AppTaskTable.vue'
 import { useAsyncDataFetch } from '@/compositions/useAsyncRequest'
+import { useForm } from '@/compositions/useForm'
+import { requiredRule } from '@/utils/requiredRule'
 
 const props = defineProps<{
   projectId?: string
@@ -51,7 +59,7 @@ const cancelRoute = computed(() => {
 })
 
 const router = useRouter()
-const updateProject = async () => {
+const { form, submit: saveProject } = useForm(async () => {
   if (!props.projectId) {
     await store.dispatch('projects/createProject', {
       title: projectTitle.value,
@@ -65,5 +73,5 @@ const updateProject = async () => {
   }
 
   router.push(cancelRoute.value)
-}
+})
 </script>
