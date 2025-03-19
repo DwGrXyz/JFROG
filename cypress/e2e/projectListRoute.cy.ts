@@ -11,6 +11,13 @@ describe('ProjectListRoute', () => {
     cy.contains('div', 'Project1')
   })
 
+  it('Show details', () => {
+    cy.addProject('Project1')
+    cy.get('[data-cy="projects"]').children().first().click()
+    cy.location('pathname').should('not.eq', '/')
+    cy.contains('h1', 'Project1')
+  })
+
   it('Create item', () => {
     cy.visit('/')
     cy.get('[data-cy="create"]').click()
