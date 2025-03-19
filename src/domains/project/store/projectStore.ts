@@ -14,11 +14,14 @@ const projectStoreModule: Module<ProjectStoreState, unknown> = {
     projects: [],
   }),
   getters: {
-    getProjects: (state) => state.projects,
     getProject: (state) => (id: string) =>
       state.projects.find((project) => project.id === id),
+    getProjects: (state) => state.projects,
   },
   mutations: {
+    reset: (state) => {
+      state.projects = []
+    },
     addProject: (state, project: ProjectModel) => {
       state.projects = [...state.projects, project]
     },
@@ -32,13 +35,13 @@ const projectStoreModule: Module<ProjectStoreState, unknown> = {
     },
   },
   actions: {
-    fetchProjects: async ({ getters }) => {
-      await mockApi()
-      return getters.getProjects
-    },
     fetchProject: async ({ getters }, id: string) => {
       await mockApi()
       return getters.getProject(id)
+    },
+    fetchProjects: async ({ getters }) => {
+      await mockApi()
+      return getters.getProjects
     },
     createUniqueId: ({ getters }) => {
       let id: string
