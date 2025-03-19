@@ -38,7 +38,7 @@
 Cypress.Commands.add('addProject', (title: string) => {
   cy.visit('/new')
   cy.get('[data-cy="title"] input').type(title)
-  cy.get('button[type="submit"]').click()
+  cy.get('[data-cy="submit"]').click()
 })
 
 Cypress.Commands.add('checkProjectsCount', (count: number) => {

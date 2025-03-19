@@ -1,7 +1,13 @@
 <template>
   <div class="d-flex ga-2">
-    <v-btn text="Cancel" :to="cancelRoute" />
-    <v-btn text="Save" color="primary" type="submit" @click="$emit('save')" />
+    <v-btn text="Cancel" :to="cancelRoute" data-cy="cancel" />
+    <v-btn
+      text="Save"
+      color="primary"
+      type="submit"
+      data-cy="submit"
+      @click="$emit('save')"
+    />
   </div>
 </template>
 
