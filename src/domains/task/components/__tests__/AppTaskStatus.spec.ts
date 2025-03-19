@@ -10,7 +10,7 @@ describe('AppTaskStatus', () => {
     { status: 'completed', color: 'green' },
   ]
 
-  test.each(cases)('$priority', ({ status, color }) => {
+  test.each(cases)('$status', ({ status, color }) => {
     const wrapper = mount(AppTaskStatus, { props: { status } })
     expect(wrapper.text()).toEqual(status)
     expect(wrapper.attributes().color).toBe(color)
