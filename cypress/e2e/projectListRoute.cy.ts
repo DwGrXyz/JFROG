@@ -13,7 +13,7 @@ describe('ProjectListRoute', () => {
 
   it('Show details', () => {
     cy.addProject('Project1')
-    cy.get('[data-cy="projects"]').children().first().click()
+    cy.enterFirstProject()
     cy.location('pathname').should('not.eq', '/')
     cy.contains('h1', 'Project1')
   })

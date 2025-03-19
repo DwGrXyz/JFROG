@@ -5,7 +5,7 @@
     <v-progress-circular v-if="taskListPending" indeterminate />
 
     <template v-else>
-      <v-table>
+      <v-table data-cy="tasks">
         <thead>
           <tr>
             <th>Title</th>

@@ -3,7 +3,7 @@
   <NotFoundPage v-else-if="!project" />
   <AppLayout v-else :title="`Project: ${project.title}`">
     <template v-slot:action>
-      <v-btn :to="formRoute" :icon="mdiPencil" variant="text" />
+      <v-btn :to="formRoute" :icon="mdiPencil" variant="text" data-cy="edit" />
     </template>
 
     <AppTaskTable :project-id="projectId" />

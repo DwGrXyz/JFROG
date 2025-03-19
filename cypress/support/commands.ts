@@ -45,4 +45,12 @@ Cypress.Commands.add('checkProjectsCount', (count: number) => {
   cy.get('[data-cy="projects"]').children().should('have.length', count)
 })
 
+Cypress.Commands.add('enterFirstProject', () => {
+  cy.get('[data-cy="projects"]').children().first().click()
+})
+
+Cypress.Commands.add('checkTasksCount', (count: number) => {
+  cy.get('[data-cy="tasks"] tbody tr').should('have.length', count)
+})
+
 export {}
