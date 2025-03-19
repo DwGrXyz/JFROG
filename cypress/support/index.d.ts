@@ -4,5 +4,7 @@ declare namespace Cypress {
     checkProjectsCount(count: number): void
     enterFirstProject(): void
     checkTasksCount(count: number): void
+    viewNewProject(title: string): void
+    editNewProject(title: string): void
   }
 }

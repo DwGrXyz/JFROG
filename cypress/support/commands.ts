@@ -53,4 +53,14 @@ Cypress.Commands.add('checkTasksCount', (count: number) => {
   cy.get('[data-cy="tasks"] tbody tr').should('have.length', count)
 })
 
+Cypress.Commands.add('viewNewProject', (title: string) => {
+  cy.addProject(title)
+  cy.enterFirstProject()
+})
+
+Cypress.Commands.add('editNewProject', (title: string) => {
+  cy.viewNewProject(title)
+  cy.get('[data-cy="edit"]').click()
+})
+
 export {}
