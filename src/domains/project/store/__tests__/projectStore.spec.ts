@@ -1,6 +1,7 @@
 import { describe, test, it, expect, beforeEach } from 'vitest'
 import store from '@/store'
 import type { ProjectModel } from '../projectModel'
+import type { TaskModel } from '@/domains/task/store/taskModel'
 
 const project1: ProjectModel = {
   id: '1',
@@ -137,6 +138,27 @@ describe('projectStore', () => {
         store.commit('projects/addProject', project2)
         const result = await store.dispatch('projects/fetchProjects')
         expect(result).toEqual([project1, project2])
+      })
+    })
+
+    describe('removeProject', () => {
+      test('success', async () => {
+        const { id } = project1
+        const task: TaskModel = {
+          id: '1',
+          projectId: project1.id,
+          title: 'Task #1',
+          priority: 'high',
+          status: 'completed',
+        }
+        store.commit('projects/addProject', project1)
+        store.commit('tasks/addTask', task)
+        expect(store.getters['projects/getProjects']).toEqual([project1])
+        expect(store.getters['tasks/getTasksByProjectId'](id)).toEqual([task])
+
+        await store.dispatch('projects/removeProject', id)
+        expect(store.getters['projects/getProjects']).toEqual([])
+        expect(store.getters['tasks/getTasksByProjectId'](id)).toEqual([])
       })
     })
 

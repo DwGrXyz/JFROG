@@ -34,6 +34,9 @@ const taskStoreModule: Module<TaskStoreState, unknown> = {
     removeTask: (state, id: string) => {
       state.tasks = state.tasks.filter((task) => task.id !== id)
     },
+    removeTasksByProjectId: (state, projectId: string) => {
+      state.tasks = state.tasks.filter((task) => task.projectId !== projectId)
+    },
   },
   actions: {
     fetchTask: async ({ getters }, id: string) => {

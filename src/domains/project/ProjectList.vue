@@ -49,7 +49,7 @@ const {
   showRemoveConfirm,
   remove: removeProject,
 } = useRemoveItemConfirm(async (id: string) => {
-  await store.commit('projects/removeProject', id)
+  await store.dispatch('projects/removeProject', id)
   await fetchProjectList()
 })
 

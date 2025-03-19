@@ -43,6 +43,10 @@ const projectStoreModule: Module<ProjectStoreState, unknown> = {
       await mockApi()
       return getters.getProjects
     },
+    removeProject: ({ commit }, id: string) => {
+      commit('tasks/removeTasksByProjectId', id, { root: true })
+      commit('removeProject', id)
+    },
     createUniqueId: ({ getters }) => {
       let id: string
 

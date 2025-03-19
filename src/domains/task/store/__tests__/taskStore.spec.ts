@@ -104,6 +104,25 @@ describe('taskStore', () => {
         expect(store.getters['tasks/getTask'](task1.id)).toEqual(undefined)
       })
     })
+
+    describe('removeTasksByProjectId', () => {
+      test('success', () => {
+        store.commit('tasks/addTask', task1)
+        store.commit('tasks/addTask', task2)
+        store.commit('tasks/addTask', task3)
+        expect(
+          store.getters['tasks/getTasksByProjectId'](task1.projectId),
+        ).toEqual([task1, task3])
+
+        store.commit('tasks/removeTasksByProjectId', task1.projectId)
+        expect(
+          store.getters['tasks/getTasksByProjectId'](task1.projectId),
+        ).toEqual([])
+        expect(
+          store.getters['tasks/getTasksByProjectId'](task2.projectId),
+        ).toEqual([task2])
+      })
+    })
   })
 
   describe('actions', () => {
