@@ -1,4 +1,4 @@
-import { describe, test, it, expect, beforeEach } from 'vitest'
+import { describe, test, expect, beforeEach } from 'vitest'
 import store from '@/store'
 import type { ProjectModel } from '../projectModel'
 import type { TaskModel } from '@/domains/task/store/taskModel'
