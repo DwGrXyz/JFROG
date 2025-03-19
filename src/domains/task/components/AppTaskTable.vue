@@ -8,17 +8,17 @@
       <v-table data-cy="tasks">
         <thead>
           <tr>
-            <th>Title</th>
+            <th class="app-task-table__title">Title</th>
             <th class="w-100">Description</th>
             <th>Priority</th>
             <th>Status</th>
-            <th class="text-no-wrap">Due date</th>
+            <th class="app-task-table__due-date text-no-wrap">Due date</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="task in taskList" :key="task.id">
-            <td class="app-task-table__title text-truncate">
+            <td class="text-truncate">
               {{ task.title }}
             </td>
 
@@ -101,5 +101,9 @@ const createTaskRoute = computed(() => getTaskCreateRoute(props.projectId))
 .app-task-table__title {
   max-width: 1px;
   width: 35%;
+}
+
+.app-task-table__due-date {
+  min-width: 120px;
 }
 </style>
