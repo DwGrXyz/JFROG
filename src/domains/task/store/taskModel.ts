@@ -8,8 +8,8 @@ export type TaskModel = {
   id: string
   projectId: string
   title: string
-  description: string
+  description?: string
   priority: TaskPriority
   status: TaskStatus
-  dueDate: string
+  dueDate?: string
 }

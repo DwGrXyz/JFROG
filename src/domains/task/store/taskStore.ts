@@ -20,6 +20,9 @@ const taskStoreModule: Module<TaskStoreState, unknown> = {
       state.tasks.filter((task) => task.projectId === projectId),
   },
   mutations: {
+    reset: (state) => {
+      state.tasks = []
+    },
     addTask: (state, task: TaskModel) => {
       state.tasks = [...state.tasks, task]
     },
@@ -33,13 +36,13 @@ const taskStoreModule: Module<TaskStoreState, unknown> = {
     },
   },
   actions: {
-    fetchTasksByProjectId: async ({ getters }, projectId: string) => {
-      await mockApi()
-      return getters.getTasksByProjectId(projectId)
-    },
     fetchTask: async ({ getters }, id: string) => {
       await mockApi()
       return getters.getTask(id)
+    },
+    fetchTasksByProjectId: async ({ getters }, projectId: string) => {
+      await mockApi()
+      return getters.getTasksByProjectId(projectId)
     },
     createUniqueId: ({ getters }) => {
       let id: string
