@@ -25,4 +25,10 @@ describe('ProjectEditRoute', () => {
     cy.contains('h1', 'Project1')
     cy.location('pathname').should('not.contain', '/edit')
   })
+
+  it('Create', () => {
+    cy.viewNewTask('Project1')
+    cy.contains('h1', 'Create task')
+    cy.location('pathname').should('contain', '/tasks/new')
+  })
 })

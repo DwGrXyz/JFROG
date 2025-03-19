@@ -15,25 +15,35 @@
         label="Title"
         required
         :rules="[requiredRule]"
+        data-cy="title"
       />
 
-      <v-textarea v-model="taskForm.description" label="Description" />
+      <v-textarea
+        v-model="taskForm.description"
+        label="Description"
+        data-cy="description"
+      />
 
       <v-select
         v-model="taskForm.priority"
         label="Priority"
         :items="taskPriorityVariant"
-        required
+        data-cy="priority"
       />
 
       <v-select
         v-model="taskForm.status"
         label="Status"
         :items="taskStatusVariant"
-        required
+        data-cy="status"
       />
 
-      <v-text-field v-model="taskForm.dueDate" label="Due date" type="date" />
+      <v-text-field
+        v-model="taskForm.dueDate"
+        label="Due date"
+        type="date"
+        data-cy="dueDate"
+      />
 
       <AppSaveCancel :cancel-route="projectRoute" />
     </v-form>

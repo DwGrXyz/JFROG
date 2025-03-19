@@ -18,19 +18,21 @@
         </thead>
         <tbody>
           <tr v-for="task in taskList" :key="task.id">
-            <td class="text-truncate">
+            <td class="text-truncate" data-cy="title">
               {{ task.title }}
             </td>
 
-            <td class="text-break">
+            <td class="text-break" data-cy="description">
               {{ task.description || '-' }}
             </td>
 
-            <td><AppTaskPriority :priority="task.priority" /></td>
+            <td data-cy="priority">
+              <AppTaskPriority :priority="task.priority" />
+            </td>
 
-            <td><AppTaskStatus :status="task.status" /></td>
+            <td data-cy="status"><AppTaskStatus :status="task.status" /></td>
 
-            <td>{{ task.dueDate || '-' }}</td>
+            <td data-cy="dueDate">{{ task.dueDate || '-' }}</td>
 
             <td>
               <div v-if="editable" class="d-flex ga-2">

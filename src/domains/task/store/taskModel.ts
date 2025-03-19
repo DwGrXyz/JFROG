@@ -13,3 +13,5 @@ export type TaskModel = {
   status: TaskStatus
   dueDate?: string
 }
+
+export type TaskForm = Omit<TaskModel, 'id' | 'projectId'>

@@ -7,5 +7,10 @@ declare namespace Cypress {
     checkTasksCount(count: number): void
     viewNewProject(title: string): void
     editNewProject(title: string): void
+    viewNewTask(title: string): void
+    createNewTask(
+      title: string,
+      task: import('../../src/domains/task/store/taskModel').TaskForm,
+    ): void
   }
 }

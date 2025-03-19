@@ -35,6 +35,8 @@
 //     }
 //   }
 // }
+import type { TaskForm } from '../../src/domains/task/store/taskModel'
+
 Cypress.Commands.add('submitProjectTitleInProjectForm', (title: string) => {
   cy.get('[data-cy="title"] input').type(title)
   cy.get('[data-cy="submit"]').click()
@@ -65,6 +67,32 @@ Cypress.Commands.add('viewNewProject', (title: string) => {
 Cypress.Commands.add('editNewProject', (title: string) => {
   cy.viewNewProject(title)
   cy.get('[data-cy="edit"]').click()
+})
+
+Cypress.Commands.add('viewNewTask', (title: string) => {
+  cy.editNewProject(title)
+  cy.get('[data-cy="create"]').click()
+})
+
+Cypress.Commands.add('createNewTask', (title: string, task: TaskForm) => {
+  cy.viewNewTask(title)
+  cy.get('[data-cy="title"]').type(task.title)
+  if (task.description) {
+    cy.get('[data-cy="description"]').type(task.description)
+  }
+
+  // TODO: Fix someday
+  cy.get('[data-cy="priority"]').click()
+  cy.get('div').contains(task.priority).click()
+
+  // TODO: Fix someday
+  cy.get('[data-cy="status"]').click()
+  cy.get('div').contains(task.status).click()
+
+  if (task.dueDate) {
+    cy.get('[data-cy="dueDate"]').type(task.dueDate)
+  }
+  cy.get('[data-cy="submit"]').click()
 })
 
 export {}
