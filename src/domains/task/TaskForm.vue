@@ -53,13 +53,12 @@ import type { CreatePayload } from '@/store/types'
 import { useRouter } from 'vue-router'
 import { requiredRule } from '@/utils/requiredRule'
 import { useAsyncDataFetch } from '@/compositions/useAsyncRequest'
+import { useForm } from '@/compositions/useForm'
 
 const props = defineProps<{
   projectId: string
   taskId?: string
 }>()
-
-const form = ref()
 
 const store = useAppStore()
 
@@ -87,15 +86,14 @@ watch(task, () => {
 })
 
 const router = useRouter()
-const saveTask = async () => {
-  if (!form.value.isValid) return
+const { form, submit: saveTask } = useForm(async () => {
   if (props.taskId) {
     await store.commit('tasks/updateTask', taskForm.value)
   } else {
     await store.dispatch('tasks/createTask', taskForm.value)
   }
   router.push(projectRoute.value)
-}
+})
 
 const projectRoute = computed(() => getProjectEditRoute(props.projectId))
 </script>
