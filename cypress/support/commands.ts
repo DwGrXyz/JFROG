@@ -35,10 +35,14 @@
 //     }
 //   }
 // }
-Cypress.Commands.add('addProject', (title: string) => {
-  cy.visit('/new')
+Cypress.Commands.add('submitProjectTitleInProjectForm', (title: string) => {
   cy.get('[data-cy="title"] input').type(title)
   cy.get('[data-cy="submit"]').click()
+})
+
+Cypress.Commands.add('addProject', (title: string) => {
+  cy.visit('/new')
+  cy.submitProjectTitleInProjectForm(title)
 })
 
 Cypress.Commands.add('checkProjectsCount', (count: number) => {

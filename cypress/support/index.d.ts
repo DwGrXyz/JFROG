@@ -1,5 +1,6 @@
 declare namespace Cypress {
   interface Chainable {
+    submitProjectTitleInProjectForm(title: string): void
     addProject(title: string): void
     checkProjectsCount(count: number): void
     enterFirstProject(): void
