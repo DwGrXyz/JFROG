@@ -1,5 +1,5 @@
 <template>
-  <v-btn :to="to">
+  <v-btn :to="to" data-cy="create">
     <div class="d-flex align-center ga-1">
       <v-icon :icon="mdiPlus" size="small" />
       Create

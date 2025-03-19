@@ -1,6 +1,6 @@
 <template>
   <AppLayout title="Project list" :fetching="projectListPending">
-    <v-list>
+    <v-list data-cy="projects">
       <v-list-item
         v-for="project in projectList"
         :key="project.id"
@@ -14,6 +14,7 @@
             :icon="mdiTrashCan"
             variant="text"
             size="small"
+            data-cy="remove"
             @click.prevent="showRemoveConfirm(project.id)"
           />
         </template>

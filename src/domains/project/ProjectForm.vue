@@ -7,6 +7,7 @@
         label="Title"
         v-model="projectTitle"
         :rules="[requiredRule]"
+        data-cy="title"
       />
 
       <AppSaveCancel :cancel-route="cancelRoute" />

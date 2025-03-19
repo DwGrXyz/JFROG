@@ -35,5 +35,14 @@
 //     }
 //   }
 // }
+Cypress.Commands.add('addProject', (title: string) => {
+  cy.visit('/new')
+  cy.get('[data-cy="title"] input').type(title)
+  cy.get('button[type="submit"]').click()
+})
+
+Cypress.Commands.add('checkProjectsCount', (count: number) => {
+  cy.get('[data-cy="projects"]').children().should('have.length', count)
+})
 
 export {}
