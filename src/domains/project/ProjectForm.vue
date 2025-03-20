@@ -13,12 +13,7 @@
       <AppSaveCancel :cancel-route="cancelRoute" />
     </v-form>
 
-    <AppTaskTable
-      v-if="projectId"
-      class="mt-4"
-      :project-id="projectId"
-      editable
-    />
+    <AppTasks v-if="projectId" class="mt-4" :project-id="projectId" editable />
   </AppLayout>
 </template>
 
@@ -31,7 +26,7 @@ import AppLayout from '@/components/AppLayout.vue'
 import { getProjectDetailsRoute, getProjectListRoute } from '@/router'
 import { useRouter } from 'vue-router'
 import AppSaveCancel from '@/components/AppSaveCancel.vue'
-import AppTaskTable from '../task/components/AppTaskTable.vue'
+import AppTasks from '@/domains/task/components/AppTasks.vue'
 import { useAsyncDataFetch } from '@/compositions/useAsyncRequest'
 import { useForm } from '@/compositions/useForm'
 import { requiredRule } from '@/utils/requiredRule'

@@ -6,7 +6,7 @@
       <v-btn :to="formRoute" :icon="mdiPencil" variant="text" data-cy="edit" />
     </template>
 
-    <AppTaskTable :project-id="projectId" />
+    <AppTasks :project-id="projectId" />
   </AppLayout>
 </template>
 
@@ -18,7 +18,7 @@ import NotFoundPage from '@/components/NotFoundPage.vue'
 import { getProjectEditRoute } from '@/router'
 import AppLayout from '@/components/AppLayout.vue'
 import { mdiPencil } from '@mdi/js'
-import AppTaskTable from '@/domains/task/components/AppTaskTable.vue'
+import AppTasks from '@/domains/task/components/AppTasks.vue'
 import { useAsyncDataFetch } from '@/compositions/useAsyncRequest'
 
 const props = defineProps<{
