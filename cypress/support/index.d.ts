@@ -1,5 +1,6 @@
 declare namespace Cypress {
   interface Chainable {
+    replaceInput(query: string, text: string): void
     submitProjectTitleInProjectForm(title: string): void
     addProject(title: string): void
     checkProjectsCount(count: number): void
@@ -10,6 +11,9 @@ declare namespace Cypress {
     viewNewTask(title: string): void
     createNewTask(
       title: string,
+      task: import('../../src/domains/task/store/taskModel').TaskForm,
+    ): void
+    fillTaskForm(
       task: import('../../src/domains/task/store/taskModel').TaskForm,
     ): void
     checkTaskFields(

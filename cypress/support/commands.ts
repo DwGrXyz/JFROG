@@ -37,6 +37,11 @@
 // }
 import type { TaskForm } from '../../src/domains/task/store/taskModel'
 
+Cypress.Commands.add('replaceInput', (query: string, text: string) => {
+  cy.get(query).clear()
+  cy.get(query).type(text)
+})
+
 Cypress.Commands.add('submitProjectTitleInProjectForm', (title: string) => {
   cy.get('[data-cy="title"] input').type(title)
   cy.get('[data-cy="submit"]').click()
@@ -76,9 +81,15 @@ Cypress.Commands.add('viewNewTask', (title: string) => {
 
 Cypress.Commands.add('createNewTask', (title: string, task: TaskForm) => {
   cy.viewNewTask(title)
-  cy.get('[data-cy="title"]').type(task.title)
+  cy.fillTaskForm(task)
+  cy.get('[data-cy="submit"]').click()
+})
+
+Cypress.Commands.add('fillTaskForm', (task: TaskForm) => {
+  cy.replaceInput('[data-cy="title"] input', task.title)
+
   if (task.description) {
-    cy.get('[data-cy="description"]').type(task.description)
+    cy.replaceInput('[data-cy="description"] textarea', task.description)
   }
 
   // TODO: Fix someday
@@ -90,9 +101,8 @@ Cypress.Commands.add('createNewTask', (title: string, task: TaskForm) => {
   cy.get('div').contains(task.status).click()
 
   if (task.dueDate) {
-    cy.get('[data-cy="dueDate"]').type(task.dueDate)
+    cy.replaceInput('[data-cy="dueDate"] input', task.dueDate)
   }
-  cy.get('[data-cy="submit"]').click()
 })
 
 Cypress.Commands.add('checkTaskFields', (task: TaskForm) => {
