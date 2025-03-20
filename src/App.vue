@@ -9,7 +9,7 @@ import { getProjectListRoute } from './router'
       <RouterLink :to="getProjectListRoute()">
         <img alt="Vue logo" src="@/assets/logo.svg" width="50" height="50" />
       </RouterLink>
-      <span>Test task</span>
+      <span>JFROG test task</span>
     </header>
     <hr />
 
