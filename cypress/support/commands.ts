@@ -85,6 +85,11 @@ Cypress.Commands.add('createNewTask', (title: string, task: TaskForm) => {
   cy.get('[data-cy="submit"]').click()
 })
 
+Cypress.Commands.add('editNewTask', (title: string, task: TaskForm) => {
+  cy.createNewTask(title, task)
+  cy.get('[data-cy="task-edit"]').click()
+})
+
 Cypress.Commands.add('fillTaskForm', (task: TaskForm) => {
   cy.replaceInput('[data-cy="title"] input', task.title)
 

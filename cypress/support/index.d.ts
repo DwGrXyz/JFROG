@@ -13,6 +13,10 @@ declare namespace Cypress {
       title: string,
       task: import('../../src/domains/task/store/taskModel').TaskForm,
     ): void
+    editNewTask(
+      title: string,
+      task: import('../../src/domains/task/store/taskModel').TaskForm,
+    ): void
     fillTaskForm(
       task: import('../../src/domains/task/store/taskModel').TaskForm,
     ): void
