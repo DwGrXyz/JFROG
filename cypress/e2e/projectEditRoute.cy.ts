@@ -63,4 +63,42 @@ describe('ProjectEditRoute', () => {
     cy.get('[data-cy="tasks-loading"]').should('not.exist')
     cy.checkTasksCount(0)
   })
+
+  it('Task - filter by priority', () => {
+    cy.createNewTask('Project1', task)
+    cy.get('[data-cy="create"]').click()
+    cy.fillTaskForm({ ...task, title: 'Low priority', priority: 'low' })
+    cy.get('[data-cy="submit"]').click()
+    cy.checkTasksCount(2)
+
+    cy.selectOption('[data-cy="filter-priority"]', 'low')
+    cy.checkTasksCount(1)
+    cy.get('[data-cy="title"]').should('contain', 'Low priority')
+
+    cy.selectOption('[data-cy="filter-priority"]', 'medium')
+    cy.checkTasksCount(0)
+
+    cy.selectOption('[data-cy="filter-priority"]', 'high')
+    cy.checkTasksCount(1)
+    cy.get('[data-cy="title"]').should('contain', 'Task1-title')
+  })
+
+  it('Task - filter by status', () => {
+    cy.createNewTask('Project1', task)
+    cy.get('[data-cy="create"]').click()
+    cy.fillTaskForm({ ...task, title: 'Status: Pending', status: 'pending' })
+    cy.get('[data-cy="submit"]').click()
+    cy.checkTasksCount(2)
+
+    cy.selectOption('[data-cy="filter-status"]', 'pending')
+    cy.checkTasksCount(1)
+    cy.get('[data-cy="title"]').should('contain', 'Status: Pending')
+
+    cy.selectOption('[data-cy="filter-status"]', 'in-progress')
+    cy.checkTasksCount(0)
+
+    cy.selectOption('[data-cy="filter-status"]', 'completed')
+    cy.checkTasksCount(1)
+    cy.get('[data-cy="title"]').should('contain', 'Task1-title')
+  })
 })

@@ -8,6 +8,7 @@
         :model-value="filter.priority"
         label="Priority"
         :items="priorityOptions"
+        data-cy="filter-priority"
         @update:model-value="updatePriority($event)"
       />
 
@@ -16,6 +17,7 @@
         :model-value="filter.status"
         label="Status"
         :items="statusOptions"
+        data-cy="filter-status"
         @update:model-value="updateStatus($event)"
       />
     </div>
