@@ -16,13 +16,7 @@ describe('TaskCreateRoute', () => {
       dueDate: '2011-11-11',
     }
     cy.createNewTask('Project1', task)
-    cy.get('[data-cy="tasks"] [data-cy="title"]').contains(task.title)
-    cy.get('[data-cy="tasks"] [data-cy="description"]').contains(
-      task.description!,
-    )
-    cy.get('[data-cy="tasks"] [data-cy="priority"]').contains(task.priority)
-    cy.get('[data-cy="tasks"] [data-cy="status"]').contains(task.status)
-    cy.get('[data-cy="tasks"] [data-cy="dueDate"]').contains(task.dueDate!)
+    cy.checkTaskFields(task)
     cy.location('pathname').should('contain', '/edit')
   })
 

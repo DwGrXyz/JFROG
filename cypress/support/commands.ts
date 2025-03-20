@@ -95,4 +95,14 @@ Cypress.Commands.add('createNewTask', (title: string, task: TaskForm) => {
   cy.get('[data-cy="submit"]').click()
 })
 
+Cypress.Commands.add('checkTaskFields', (task: TaskForm) => {
+  cy.get('[data-cy="tasks"] [data-cy="title"]').contains(task.title)
+  cy.get('[data-cy="tasks"] [data-cy="description"]').contains(
+    task.description!,
+  )
+  cy.get('[data-cy="tasks"] [data-cy="priority"]').contains(task.priority)
+  cy.get('[data-cy="tasks"] [data-cy="status"]').contains(task.status)
+  cy.get('[data-cy="tasks"] [data-cy="dueDate"]').contains(task.dueDate!)
+})
+
 export {}

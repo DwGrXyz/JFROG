@@ -12,5 +12,8 @@ declare namespace Cypress {
       title: string,
       task: import('../../src/domains/task/store/taskModel').TaskForm,
     ): void
+    checkTaskFields(
+      task: import('../../src/domains/task/store/taskModel').TaskForm,
+    ): void
   }
 }
