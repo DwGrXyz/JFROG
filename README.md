@@ -35,6 +35,10 @@ Pros: all feature files are gathered togeter, a developer don't need to jump acr
 
 Cons: to find all modules/services/forms/whatever could be tricky, they are divided between features.
 
+### API
+
+Api mocks are simple - it's just a delay. It's better to make api services for each domain to emulate api requests. Under the hood they could read a data from the localStorage. The reason why in the application I used a different implementation is that when I started to work on api mocks, the persistent storage already was implemented and I didn't want to waste time on the better solution.
+
 ### Routing
 
 In project neseted routes haven't been used. **Data** **validation** is **performed** **inside** the **components**, **and** **in** **some** **cases** **this** **leads** **to** **additional** **checks**. Example: the task pages have to check if their projects exist.
