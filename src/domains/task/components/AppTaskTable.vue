@@ -2,7 +2,11 @@
   <div>
     <h2>Tasks:</h2>
 
-    <v-progress-circular v-if="taskListPending" indeterminate />
+    <v-progress-circular
+      v-if="taskListPending"
+      indeterminate
+      data-cy="tasks-loading"
+    />
 
     <template v-else>
       <v-table data-cy="tasks">
@@ -41,6 +45,7 @@
                   :icon="mdiPencil"
                   variant="text"
                   size="small"
+                  data-cy="task-edit"
                 />
 
                 <v-btn
@@ -48,6 +53,7 @@
                   :icon="mdiTrashCan"
                   variant="text"
                   size="small"
+                  data-cy="task-remove"
                   @click.prevent="showRemoveConfirm(task.id)"
                 />
               </div>

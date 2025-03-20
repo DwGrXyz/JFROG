@@ -1,5 +1,13 @@
 import type { TaskForm } from '../../src/domains/task/store/taskModel'
 
+const task: TaskForm = {
+  title: 'Task1-title',
+  description: 'Task1-description',
+  priority: 'high',
+  status: 'completed',
+  dueDate: '2011-11-11',
+}
+
 describe('ProjectEditRoute', () => {
   it('Default content', () => {
     cy.editNewProject('Project1')
@@ -35,15 +43,24 @@ describe('ProjectEditRoute', () => {
   })
 
   it('Task', () => {
-    const task: TaskForm = {
-      title: 'Task1-title',
-      description: 'Task1-description',
-      priority: 'high',
-      status: 'completed',
-      dueDate: '2011-11-11',
-    }
     cy.createNewTask('Project1', task)
     cy.checkTasksCount(1)
     cy.checkTaskFields(task)
+  })
+
+  it('Task - edit', () => {
+    cy.createNewTask('Project1', task)
+    cy.get('[data-cy="task-edit"]').click()
+    cy.contains('h1', 'Edit task')
+    cy.location('pathname').should('contain', '/tasks')
+    cy.location('pathname').should('contain', '/edit')
+  })
+
+  it('Task - remove', () => {
+    cy.createNewTask('Project1', task)
+    cy.get('[data-cy="task-remove"]').click()
+    cy.get('[data-cy="confirm"] [data-cy="submit"]').click()
+    cy.get('[data-cy="tasks-loading"]').should('not.exist')
+    cy.checkTasksCount(0)
   })
 })
